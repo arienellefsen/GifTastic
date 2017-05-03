@@ -23,7 +23,7 @@
     var topics = ["cat", "dog", "bird"];
 
     init();
-
+    
     function init(){
         for (var i =0; i< topics.length; i++){        
         // create a button based on array
@@ -32,6 +32,7 @@
         {
             text: topics[i],
             'data-animal': topics[i]
+            
         })
         $("#buttonAnimals").append(btn);    
     }
@@ -39,6 +40,8 @@
 
     $("button").on("click", function() {
     
+    $('#gifs-appear-here').empty();
+
       var animal = $(this).attr("data-animal");
       var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
         animal + "&api_key=dc6zaTOxFJmzC&limit=10";
@@ -46,36 +49,31 @@
         url: queryURL,
         method: "GET"
       }).done(function(response) {
-        // Step 1: Run this file, click a button, and see what the response object looks like in the browser's console.
-        // Open up the data key, then open up the 0th, element. Study the keys and how the JSON is structured.
-        console.log(response);
+
         var results = response.data;
-        // Step 2: since the image information is inside of the data key,
-        // make a variable named results and set it equal to response.data
-        // =============== put step 2 in between these dashes ==================
-        // ========================
-        console.log("Image URL: " +imgResponse);
+        
+
          for (var i = 0; i < results.length; i++) {          
+        
                 var imgResponse = response.data[i].images.fixed_height.url;
+                var stillImage = response.data[i].images.fixed_height_still.url;
+                var still = response.data[i].images.fixed_height_still.url;
+
                  var img = $('<img />',
                     { id: 'Myid',
-                        src: imgResponse, 
-                        width: 300
-                    })
-                .appendTo($('#gifs-appear-here'));
-                console.log(results[i]);
-
-        // Step 3: uncomment the for loop above and the closing curly bracket below.
-        // Make a div with jQuery and store it in a variable named animalDiv.
-        // Make a paragraph tag with jQuery and store it in a variable named p.
-        // Set the inner text of the paragraph to the rating of the image in results[i].
-        // Make an image tag with jQuery and store it in a variable named animalImage.
-        // Set the image's src to results[i]'s fixed_height.url.
-        // Append the p variable to the animalDiv variable.
-        // Append the animalImage variable to the animalDiv variable.
-        // Prepend the animalDiv variable to the element with an id of gifs-appear-here.
-        // ============= put step 3 in between these dashes ======================
-        // ==================================
+                        src: stillImage,
+                        'data-animate': imgResponse, 
+                        'data-still': still,
+                         width: 300,
+                         on: {
+                          click:function() {                                                                                      
+                            $(this).attr('src', $(this).data('animate')).click(function(){
+                                $(this).attr('src', $(this).data('still'));                                                   
+                        });                            
+                      }
+                    }
+                  })
+                    .appendTo($('#gifs-appear-here')).empty();            
          }
       });
     });
