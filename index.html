@@ -1,84 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <title>Animal Buttons</title>
-</head>
-
+    <meta charset="utf-8">
+    <title>Animal Buttons</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/reset.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  </head>
 <body>
 
-  <!--<button data-animal="cat">meow</button>
-  <button data-animal="dog">woof</button>
-  <button data-animal="bird">chirp</button>-->
-  
-<div id="buttonAnimals"></div>
-
-  <div id="gifs-appear-here">
+<div class="container">
+  <div class="row">  
+  <div class="col-sm-12">
+    <section id="header">
+    <h1> GIPHY API </h1>
+    <div id="buttonAnimals" class="center-block"></div>
+   </div>
+   </section>
+    <div class="col-sm-8 col-md-push-2">     
+      <div id="gifs-appear-here" class="center-block">
+    </div>
   </div>
 
-  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
-  <script type="text/javascript">
-
-    var topics = ["cat", "dog", "bird"];
-
-    init();
-    
-    function init(){
-        for (var i =0; i< topics.length; i++){        
-        // create a button based on array
-        console.log("My Topics: " +topics[i]);                 
-        var btn= $('<button/>',
-        {
-            text: topics[i],
-            'data-animal': topics[i]
-            
-        })
-        $("#buttonAnimals").append(btn);    
-    }
-}
-
-    $("button").on("click", function() {
-    
-    $('#gifs-appear-here').empty();
-
-      var animal = $(this).attr("data-animal");
-      var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
-        animal + "&api_key=dc6zaTOxFJmzC&limit=10";
-      $.ajax({
-        url: queryURL,
-        method: "GET"
-      }).done(function(response) {
-
-        var results = response.data;
-        
-
-         for (var i = 0; i < results.length; i++) {          
-        
-                var imgResponse = response.data[i].images.fixed_height.url;
-                var stillImage = response.data[i].images.fixed_height_still.url;
-                var still = response.data[i].images.fixed_height_still.url;
-
-                 var img = $('<img />',
-                    { id: 'Myid',
-                        src: stillImage,
-                        'data-animate': imgResponse, 
-                        'data-still': still,
-                         width: 300,
-                         on: {
-                          click:function() {                                                                                      
-                            $(this).attr('src', $(this).data('animate')).click(function(){
-                                $(this).attr('src', $(this).data('still'));                                                   
-                        });                            
-                      }
-                    }
-                  })
-                    .appendTo($('#gifs-appear-here')).empty();            
-         }
-      });
-    });
-
-  </script>
+    <div class="col-sm-4">
+      <form>
+      Topics<br>
+      <input type="text" name="topics" value="" id="topics">
+      <br><br>
+      <div id="msg"></div>
+      <input type="submit" value="Submit" id="submit" class="buttonsApp">
+      </form>
+    </div>
+  </div>
+</div>
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
+    <script src="assets/js/ap.js"></script>
 </body>
-
 </html>
