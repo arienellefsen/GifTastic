@@ -43,7 +43,7 @@ function appendApi(){
     var animal = $(this).attr("data-animal");
     var limit = 10;
     var apiKey = 'dc6zaTOxFJmzC';
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +            
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +            
     animal + "&api_key="+apiKey+"&limit="+limit;
 
 // 6- Call Api
